@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from main_app.forrms import Contactform
+from main_app.forms import Contactform
 
 
 # Create your views here.
