@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect
-from main_app.forms import Contactform, Banner
+from main_app.forms import *
 
 
 # Create your views here.
 def index(request):
     banner = Banner.objects.all()
+    product = Product.objects.all()
+    category = Category.objects.all()
 
     context ={
         'banner' : banner,
+        'product' : product,
+        'category' : category,
     }
 
     return render (request, 'mainapp/index.html', context)
