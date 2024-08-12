@@ -1,10 +1,16 @@
 from django.shortcuts import render, redirect
-from main_app.forms import Contactform
+from main_app.forms import Contactform, Banner
 
 
 # Create your views here.
 def index(request):
-    return render (request, 'mainapp/index.html')
+    banner = Banner.objects.all()
+
+    context ={
+        'banner' : banner,
+    }
+
+    return render (request, 'mainapp/index.html', context)
 
 def contact(request):
     if request.method == 'POST':
