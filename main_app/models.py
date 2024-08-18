@@ -39,7 +39,7 @@ class Category(models.Model):
         verbose_name_plural = 'Category'
     
     def __str__(self):
-        return self.name
+        return self.c_name
     
 #Brand name
 class Brand(models.Model):

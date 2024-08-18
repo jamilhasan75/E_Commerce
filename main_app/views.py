@@ -26,3 +26,12 @@ def contact(request):
     else:
         form = Contactform()
     return render(request, 'mainapp/contact.html',{'form':form})
+
+#product details page
+def product_detail(request, pk):
+    productd = Product.objects.get(pk=pk)
+
+    context ={
+        'product' : productd,
+    }
+    return render(request, 'mainapp/product.html', context)
