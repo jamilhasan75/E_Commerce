@@ -57,7 +57,7 @@
                                 <ul>
                                     <li>
                                         <div class="header-dropdown">
-                                            <a href="{% url 'logout_view' %}">Logout</a>
+                                            
                                             <div class="header-menu">
                                                 <ul>
                                                     <li><a href="#">Eur</a></li>
@@ -78,7 +78,7 @@
                                             </div><!-- End .header-menu -->
                                         </div>
                                     </li>
-                                    <li><a href="#signin-modal" data-toggle="modal">Sign in / Sign up</a></li>
+                                    <li></li>
                                 </ul>
                             </li>
                         </ul><!-- End .top-menu -->
@@ -120,32 +120,38 @@
                                 aria-haspopup="true" aria-expanded="false" data-display="static"
                                 title="Compare Products" aria-label="Compare Products">
                                 <div class="icon">
-                                    <i class="icon-random"></i>
+                                    <i class="icon-user"></i>
                                 </div>
                                 <p>Compare</p>
                             </a>
 
+                          
+
                             <div class="dropdown-menu dropdown-menu-right">
+                                {% if user.is_authenticated %}
+                                    <ul class="compare-products">
+                                        <li class="compare-product">
+                                            <a href="#" class="btn-remove" title="Remove Product">
+                                            <h4 class="compare-product-title"><a href="{% url 'logout_view' %}" >Logout</a>
+                                            </h4>
+                                        </li>
+                                    </ul>
+                                {% else %}
                                 <ul class="compare-products">
                                     <li class="compare-product">
-                                        <a href="#" class="btn-remove" title="Remove Product"><i
-                                                class="icon-close"></i></a>
-                                        <h4 class="compare-product-title"><a href="product.html">Blue Night Dress</a>
+                                        <a href="#" class="btn-remove" title="Remove Product">
+                                        <h4 class="compare-product-title"><a href="{% url 'register' %}" >Sign Up</a>
                                         </h4>
                                     </li>
                                     <li class="compare-product">
-                                        <a href="#" class="btn-remove" title="Remove Product"><i
-                                                class="icon-close"></i></a>
-                                        <h4 class="compare-product-title"><a href="product.html">White Long Skirt</a>
+                                        
+                                        <h4 class="compare-product-title"><a href="{% url 'login' %}" >Sign In</a>
                                         </h4>
                                     </li>
                                 </ul>
 
-                                <div class="compare-actions">
-                                    <a href="#" class="action-link">Clear All</a>
-                                    <a href="#" class="btn btn-outline-primary-2"><span>Compare</span><i
-                                            class="icon-long-arrow-right"></i></a>
-                                </div>
+                                {% endif %}
+                                
                             </div><!-- End .dropdown-menu -->
                         </div><!-- End .compare-dropdown -->
 

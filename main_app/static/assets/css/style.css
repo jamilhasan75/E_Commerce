@@ -1,4 +1,15 @@
 @charset "UTF-8";
+
+.login-page{
+ padding-left: 200px;
+ padding-right: auto;
+ height: auto;
+ width: 550px;
+ margin-left: 250px;
+ margin-top: 5px;
+ margin-bottom: 5px;
+ 
+}
 /*--------------------- TABLE OF CONTENTS --------------- */
 /*--------------------- 1.    GENERAL STYLES ------------------- */
 /*--------------------- 2.    HEADERS ------------------- */
