@@ -30,8 +30,17 @@ def contact(request):
 #product details page
 def product_detail(request, pk):
     productd = Product.objects.get(pk=pk)
+#Related product show
+    related_products = Product.objects.filter(category=productd.category).exclude(id=productd.pk).order_by('?')[:11]
 
     context ={
         'product' : productd,
+        'related_products' : related_products,
     }
     return render(request, 'mainapp/product.html', context)
+
+#About us page
+def about(request):
+    return render(request, 'mainapp/about.html')
+
+
