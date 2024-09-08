@@ -7,7 +7,7 @@
 <div class="container">
     <div class="col-11 col-md-5 mx-auto mt-5">
         <div class="card shadow p-3">
-            <img src="{{user.profile.image.url}}" style="height:400px;width: 350px;" alt="">
+            <img src="{{user.profile.image.url}}" style="height:200px;width: 250px;" alt="">
         </div>
         <div class="card-body">
             <p>{{ user.username }}</p>
@@ -17,7 +17,8 @@
             <p>{{ user.profile.phone }}</p>
             <p>{{ user.profile.date_of_Birth }}</p>
 
-            <a href="{% url 'profileupdate-page' %}">update</a>
+            <a href="{% url 'profileupdate-page' %}">update</a> 
+            <a href="{% url 'password-change' %}">Password Change</a>
         </div>
 
     </div>
