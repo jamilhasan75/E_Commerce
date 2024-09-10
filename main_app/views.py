@@ -9,10 +9,16 @@ def index(request):
     product = Product.objects.all()
     category = Category.objects.all()
 
+#Add to Cart counting
+    cart_item_count = Cart.objects.count()
+
+    # Pass the count to the template
+  
     context ={
         'banner' : banner,
         'product' : product,
         'category' : category,
+        'cart_item_count': cart_item_count,
     }
 
     return render (request, 'mainapp/index.html', context)
@@ -76,5 +82,18 @@ def add_to_cart(request, product_id):
         cart_item.save()
     
     return redirect('/')
+
+#Add to Cart Counting
+def front_page(request):
+    # Count all items added to the cart
+    cart_item_count = Cart.objects.count()
+
+    # Pass the count to the template
+  
+    context ={
+        'cart_item_count': cart_item_count,
+    }
+    
+    return render(request, 'mainapp/base.html', context)
 
 
