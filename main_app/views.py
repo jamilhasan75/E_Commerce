@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from main_app.forms import *
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -10,7 +11,6 @@ def index(request):
     category = Category.objects.all()
 
 #Add to Cart counting
-    cart_item_count = Cart.objects.count()
 
     # Pass the count to the template
   
@@ -18,7 +18,6 @@ def index(request):
         'banner' : banner,
         'product' : product,
         'category' : category,
-        'cart_item_count': cart_item_count,
     }
 
     return render (request, 'mainapp/index.html', context)
@@ -73,6 +72,7 @@ def about(request):
     return render(request, 'mainapp/about.html')
 
 #Cart
+@login_required(login_url = 'login_page')
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart_item, created = Cart.objects.get_or_create(user=request.user, product=product)
@@ -81,19 +81,23 @@ def add_to_cart(request, product_id):
         cart_item.quantity +=1
         cart_item.save()
     
+    return redirect('cart')
+
+#Cart
+@login_required(login_url = 'login_page')
+def cart(request):
+    cart_items = Cart.objects.filter(user=request.user)
+    total = sum(item.product.regular_price * item.quantity for item in cart_items)
+    return render(request, 'mainapp/cart.html', {'cart_items': cart_items, 'total': total})
+
+def add_to_wishlist(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    Wishlist.objects.get_or_create(user=request.user, product=product)
     return redirect('/')
 
-#Add to Cart Counting
-def front_page(request):
-    # Count all items added to the cart
-    cart_item_count = Cart.objects.count()
-
-    # Pass the count to the template
-  
-    context ={
-        'cart_item_count': cart_item_count,
-    }
-    
-    return render(request, 'mainapp/base.html', context)
+@login_required
+def wishlist(request):
+    wishlist_items = Wishlist.objects.filter(user=request.user)
+    return render(request, 'mainapp/wishlist.html', {'wishlist_items': wishlist_items})
 
 
