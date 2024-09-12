@@ -13,6 +13,8 @@ urlpatterns = [
     path('categories_product/<int:pk>', categories_product, name='categories_product_page'),
     path('add_to_cart/<int:product_id>', add_to_cart, name='add_to_cart'),
     path('add_to_wishlist/<int:product_id>', add_to_wishlist, name='add_to_wishlist'),
+    path('cart/', cart, name='cart'),
+    path('wishlist', wishlist, name='wishlist'),
 
     path('password_change/', auth_views.PasswordChangeView.as_view(template_name='user_app/passwordchange.html'), name='password-change'),
     path('password_change/done', auth_views.PasswordChangeDoneView.as_view(template_name='user_app/passwordchange_done.html'), name='password_change_done'),
