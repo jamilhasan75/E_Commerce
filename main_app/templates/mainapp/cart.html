@@ -1,89 +1,45 @@
 {% extends 'mainapp/base.html' %}
-{% load static %}
 
 {% block content %}
-<style>
-
-.cart{
-    width: 700px;
-    margin-left: 300px;
-    margin-bottom: 100px;
-    background-color: rgb(238, 245, 242);
-}
-</style>
-
-    <div class="container h-100 cart">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col">
-          <p><span class="h2">Shopping Cart </span><span class="h4">(1 item in your cart)</span></p>
-  
-          <div class="card mb-4">
-            <div class="card-body p-4">
-  
-              <div class="row align-items-center">
-                <div class="col-md-2">
-                  <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/1.webp"
-                    class="img-fluid" alt="Generic placeholder image">
-                </div>
-                <div class="col-md-2 d-flex justify-content-center">
-                  <div>
-                    <p class="small text-muted mb-4 pb-2">Name</p>
-                    <p class="lead fw-normal mb-0">{{cart_items}}</p>
-                  </div>
-                </div>
-                <div class="col-md-2 d-flex justify-content-center">
-                  <div>
-                    <p class="small text-muted mb-4 pb-2">Color</p>
-                    <p class="lead fw-normal mb-0"><i class="fas fa-circle me-2" style="color: #fdd8d2;"></i>
-                      pink rose</p>
-                  </div>
-                </div>
-                <div class="col-md-2 d-flex justify-content-center">
-                  <div>
-                    <p class="small text-muted mb-4 pb-2">Quantity</p>
-                    <p class="lead fw-normal mb-0">{{quantity}}</p>
-                  </div>
-                </div>
-                <div class="col-md-2 d-flex justify-content-center">
-                  <div>
-                    <p class="small text-muted mb-4 pb-2">Price</p>
-                    <p class="lead fw-normal mb-0">${{total}}</p>
-                  </div>
-                </div>
-                <div class="col-md-2 d-flex justify-content-center">
-                  <div>
-                    <p class="small text-muted mb-4 pb-2">Total</p>
-                    <p class="lead fw-normal mb-0">$799</p>
-                  </div>
-                </div>
-              </div>
-  
-            </div>
-          </div>
-  
-          <div class="card mb-5">
-            <div class="card-body p-4">
-  
-              <div class="float-end">
-                <p class="mb-0 me-5 d-flex align-items-center">
-                  <span class="small text-muted me-2">Order total:</span> <span
-                    class="lead fw-normal">$799</span>
-                </p>
-              </div>
-  
-            </div>
-          </div>
-  
-          <div class="d-flex justify-content-end">
-            <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-light btn-lg me-2">Continue shopping</button>
-            <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg">Add to cart</button>
-          </div>
-  
+<div class="container my-5">
+    <h2 class="text-center mb-4">Your Cart</h2>
+    {% if cart_items %}
+        <div class="table-responsive d-flex justify-content-center">
+            <table class="table table-bordered text-center" style="max-width: 700px;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td class="d-flex align-items-center justify-content-center">
+                            <img height="40px" width="40px" src="{{ item.product.image.url }}" alt="Product image" class="img-fluid rounded mr-2">
+                            <span>{{ item.product.name }}</span>
+                        </td>
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.product.regular_price }}</td>
+                        <td>
+                            <a href="{% url 'increment_cart_item' item.id %}" class="btn btn-success btn-sm">+</a>
+                            <a href="{% url 'decrement_cart_item' item.id %}" class="btn btn-danger btn-sm">-</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-      </div>
-    </div>
-  
- 
-
-{% endblock content %}
-
+        <div class="text-center my-4">
+            <p class="lead">Total: <strong>${{ total }}</strong></p>
+            <a href="{% url 'checkout' %}" class="btn btn-lg btn-primary px-5 py-2 shadow">
+                Proceed to Checkout
+            </a>
+        </div>
+    {% else %}
+        <p class="text-center">Your cart is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}
