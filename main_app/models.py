@@ -129,5 +129,22 @@ class ShippingAddress(models.Model):
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     delivery_area = models.CharField(max_length=20, choices=[('inside_dhaka', 'Inside Dhaka'), ('outside_dhaka', 'Outside Dhaka')])
+
+class Payment(models.Model):
+    PAYMENT_METHOD_CHOICES = (
+        ('credit_card', 'Credit Card'),
+        ('paypal', 'PayPal'),
+        ('bank_transfer', 'Bank Transfer'),
+    )
+    
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES)
+    transaction_id = models.CharField(max_length=100, unique=True)
+    status = models.CharField(max_length=20, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def _str_(self):
+        return f"Payment for Order {self.order.id}"
     
     

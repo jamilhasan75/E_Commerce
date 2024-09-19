@@ -23,6 +23,10 @@ urlpatterns = [
     path('add_to_wishlist/<int:product_id>', add_to_wishlist, name='add_to_wishlist'),
     path('wishlist/', wishlist, name='wishlist'),
 
+    path('payment/<int:order_id>/', payment, name='payment'),
+    path('order_confirmation/<int:order_id>/', order_confirmation, name='order_confirmation'),
+    path('order_history/', order_history, name='order_history'),
+
     path('password_change/', auth_views.PasswordChangeView.as_view(template_name='user_app/passwordchange.html'), name='password-change'),
     path('password_change/done', auth_views.PasswordChangeDoneView.as_view(template_name='user_app/passwordchange_done.html'), name='password_change_done'),
 ]
